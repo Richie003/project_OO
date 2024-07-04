@@ -1,0 +1,248 @@
+{%extends 'home/base.html' %}
+{%load static%}
+{%load c_filters%}
+{%block title%}Alat|Community{%endblock%}
+{%block links%}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{%static 'css/home/styles.css' %}">
+<link rel="stylesheet" href="{%static 'css/icon1.css' %}">
+<link rel="stylesheet" href="{%static 'css/image.css' %}">
+<link rel="stylesheet" href="{%static 'css/card.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"
+        integrity="sha512-8Wy4KH0O+AuzjMm1w5QfZ5j5/y8Q/kcUktK9mPUVaUoBvh3QPUZB822W/vy7ULqri3yR8daH3F58+Y8Z08qzeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js"
+        integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
+        integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    #big-pic{
+        --bs-bg-opacity: 1;
+        background:url(/static/images/sections/heidi-fin-2TLREZi7BUg-unsplash.jpg) rgb(45 47 68 / 95%) no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 105vh;
+    }
+    #big-pic2{
+        --bs-bg-opacity: 1;
+        background:url(/static/images/prods.jpg) rgb(45 47 68 / 95%) no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 85vh;
+    }
+    .bg-cadet{
+        background-color: cadetblue;
+    }
+    .bg-modal, .bg-modal2, .bg-modal3{
+        width:100%;
+        height:100%;
+        z-index:1;
+        background-color: rgba(0, 0, 0, 0.7)!important;
+        position:fixed;
+        left:0;
+        top:0;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        display:none;
+    }
+    .modal-content{
+        width:500px!important;
+        background:linear-gradient(to bottom, rgb(255 255 255 / 52%) 0%, rgb(255 255 255 / 86%) 100%),url(/static/images/background.png)no-repeat;
+        text-align: center!important;
+        position:relative;
+    }
+    .close{
+        position:absolute!important;
+        top:0!important;
+        right:14px;
+        font-size:41px;
+        transform:rotate(45deg);
+        cursor:pointer!important;
+        z-index:1;
+    }
+    .close:hover{
+        color:red;
+        position:absolute!important;
+        top:0!important;
+        right:14px;
+        font-size:41px;
+        transform:rotate(19deg);
+        cursor:pointer!important;
+        z-index:1;
+    }
+
+@media (max-width: 605px) {
+    .logo{
+        display:none !important;
+    }
+}
+
+@media (max-width: 695px) {
+    #big-pic{
+        height: 71vh;
+    }
+    #text-button {
+        margin-top: 10rem !important;
+    }
+}
+
+/* */
+ /* */
+
+
+ @keyframes anim1 {
+  from{
+    height: 0px;
+  }
+  to{
+    height: 345px;
+  }
+}
+</style>
+{%endblock%}
+{%block home%}
+<header class="bg-dark py-5 px-4" id="big-pic">
+    <div class="container px-4 px-lg-5 my-5 max-19" id="text-button">
+        <div class="text-left text-white mb-4">
+            <h1 class="display-4 fw-bolder">Shop in style</h1>
+            <p class="lead fw-normal text-white-100 mb-0">We Have Just What You Seek</p>
+        </div>
+        <div class="butn">
+            <button class="btn btn-light btn-lg">Shop</button>
+        </div>
+    </div>
+</header>
+<section class="container">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="text-center">
+                    <h2 class="fw-bolder color-class fs-2">Shop Sections...</h2>
+                    <p class="lead fw-normal text-muted color-class mb-5">Shop at ease from the comfort of your home, here are sections to make it easier..</p>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel owl-theme">
+            {%for items in section%}
+            <div class="item">
+                <div class="rounded bg-cadet position-absolute px-3" style="top: 0; z-index:1; right:0;">
+                    <p class="card-title fw-bolder text-white fs-4">
+                        {{items.section_name}}
+                    </p>
+                </div>
+                <div class="card mb-3 shadow border-0">
+                    <img src="{{items.section_img.url}}" class="card-img-top o-f" alt="..." style="height: 54vh;">
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+</section>
+<header class="bg-dark py-5 px-4" id="big-pic2">
+    <div class="row">
+        <div class="col-md-6 px-0">
+            <div class="jumbotron p-4 p-md-5 text-white rounded bg-light">
+                <h1 class="display-4 text-dark">Introducing - The best of the best</h1>
+                <p class="lead my-3 text-dark">
+                    The primary goal of our store’s website is to sell goods and to give our customers the best.
+                </p>
+                <p class="lead mt-5"><a href="#" class="border py-3 px-4 bg-dark text-light font-weight-bold">Read More</a></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</header>
+<div class="ui container">
+    <section class="box-1">
+        <div class="container-box px-5 my-5">
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">Let's start building together. Here's what
+                    you need to know <i class="icon angle right text-secondary"></i></h2></div>
+                <div class="col-lg-8">
+                    <div class="row gx-5 row-cols-1 row-cols-md-2">
+                        <div class="col mb-5 h-100">
+                            <i class="feature bg-gradient1 fs-2 rounded-3 mb-3 imag1 icon bicycle text-secondary">
+
+                            </i>
+                            <h2 class="h5">Rider</h2>
+                            <p class="mb-0">Bike rides to home is wonderful, having a ride available just when you need
+                                it
+                                is Beautiful!</p>
+                            <p class="mb-0">Check out for available rides at proximity and book a ride NOW.</p>
+                        </div>
+                        <div class="col mb-5 h-100">
+                            <i class="feature bg-gradient1 fs-2 rounded-3 mb-3 imag1 icon user text-secondary">
+
+                            </i>
+                            <h2 class="h5">Contract Me</h2>
+                            <p class="mb-0">Meet the Ibeju-lekki's finest Engineers and get that project started :)</p>
+                        </div>
+                        <div class="col h-100">
+                            <i class="feature bg-gradient1 fs-2 rounded-3 mb-3 imag1 icon home text-secondary">
+
+                            </i>
+                            <h2 class="h5">To let?</h2>
+                            <p class="mb-0">Hello! tenants, guess who's leasing out a flat today?</p>
+                            <p class="mb-0">Well you are just a click away from finding out, do the clicking while we do
+                                the
+                                seeking ;)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--<div class="slider">-->
+    <!--    <div class="slider-image">-->
+    <!--        <img src="{%static 'svgs/bino.svg' %}" alt="" class="slide-img">-->
+    <!--    </div>-->
+    <!--</div>-->
+</div>
+{%endblock home%}
+
+{%block scripts%}
+<script src="{%static 'js/semantic.js' %}"></script>
+<script>
+$('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:2
+        }
+    }
+})
+//
+// for peace keeping
+
+const pictures = document.querySelectorAll('.anim');
+
+ observer = new IntersectionObserver((entries) => {
+
+   entries.forEach(entry => {
+     if (entry.intersectionRatio > 0) {
+       entry.target.style.animation = `anim1 1.5s forwards ease-out`;
+     }
+     else {
+       entry.target.style.animation = 'none';
+     }
+   })
+ })
+
+
+pictures.forEach(picture => {
+  observer.observe(picture)
+})
+</script>
+{%endblock%}

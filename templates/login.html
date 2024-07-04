@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content />
+        <meta name="author" content />
+        <title>Sign-up</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{%static 'css/home/styles.css' %}" rel="stylesheet" />
+        <link href="{%static 'css/semantic.css' %}" rel="stylesheet" />
+        <link rel="stylesheet" href="{%static 'css/icon1.css' %}">
+        <script>
+        var user = '{{request.user}}'
+
+        function getCookie(name){
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== ''){
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++){
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')){
+                        cookieValue = decodeURIComponent(cookie.substring(
+                            name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+    </script>
+    </head>
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <!-- Page content-->
+            <section class="py-5">
+                <div class="container px-3">
+                    <!-- Contact form-->
+                    <div class="rounded-3 py-5 px-2 px-md-5 mb-5">
+                        <div class="text-center mb-5">
+                            <div class="mb-3" style="flex-direction: column;">
+                                <h1 class="fw-bolder display-5">Sign In</h1>
+                                <img src="{%static 'images/bag.png' %}" alt="" class="" width="119px" style="height: 9rem;">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <button class="ui black button px-3">
+                                    <?xml version="1.0" encoding="UTF-8"?>
+                                    <svg width="16px" height="16px" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+                                        <title>UI/icons/color/google</title>
+                                        <desc>Created with Sketch.</desc>
+                                        <defs/>
+                                        <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g id="UI/icons/color/google">
+                                                <g id="Group" transform="translate(2.000000, 2.000000)">
+                                                    <path d="M32.4365525,16.6024012 C32.4365525,15.4515967 32.3313665,14.344128 32.1357206,13.2820585 L16.5492615,13.2820585 L16.5492615,19.5616128 L25.4557094,19.5616128 C25.0721312,21.5908257 23.9059692,23.3098098 22.1535707,24.4613022 L22.1535707,28.5341733 L27.5019274,28.5341733 C30.631561,25.7077204 32.4365525,21.5461142 32.4365525,16.6024012 L32.4365525,16.6024012 Z" id="Shape" fill="#4285F4"/>
+                                                    <path d="M16.5492615,32.4674071 C21.0175621,32.4674071 24.7635856,31.0139403 27.5019274,28.5341733 L22.1535707,24.4613022 C20.6718508,25.4353244 18.7756982,26.0110706 16.5492615,26.0110706 C12.2387399,26.0110706 8.59088994,23.1557272 7.2893887,19.3181072 L1.76011213,19.3181072 L1.76011213,23.5244249 C4.48302664,28.8299569 10.0796222,32.4674071 16.5492615,32.4674071 L16.5492615,32.4674071 Z" id="Shape" fill="#34A853"/>
+                                                    <path d="M7.2893887,19.3181072 C6.95840347,18.344085 6.77047118,17.3033395 6.77047118,16.2337035 C6.77047118,15.1640676 6.95840347,14.1233221 7.2893887,13.1492999 L7.2893887,8.94298219 L1.76011213,8.94298219 C0.639530783,11.1345322 0,13.6142992 0,16.2337035 C0,18.8531079 0.639530783,21.3328749 1.76011213,23.5244249 L7.2893887,19.3181072 L7.2893887,19.3181072 Z" id="Shape" fill="#FBBC05"/>
+                                                    <path d="M16.5492615,6.4563365 C18.9790577,6.4563365 21.160615,7.27558824 22.8758478,8.88382548 L27.6225407,4.22764161 C24.755872,1.60892511 21.0098485,0 16.5492615,0 C10.0803235,0 4.48302664,3.63813805 1.76011213,8.94298219 L7.2893887,13.1492999 C8.59088994,9.31236774 12.2394411,6.4563365 16.5492615,6.4563365 Z" id="Shape" fill="#EA4335"/>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    Google
+                                </button>
+                                <button class="ui black button px-3"><i class="icon facebook f"></i>Facebook</button>
+                            </div>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form class="ui form" method="POST" action="" enctype="multipart/form-data">
+                                    <input type="hidden" name="bio-profile">
+                                    {%csrf_token%}
+                                    <div class="field">
+                                        <div class="field">
+                                            <p>
+                                                <label for="id_username">
+                                                    Username
+                                                </label>
+                                                <input type="text" name="username" maxlength="255" required="" id="id_username">
+                                            </p>
+                                           <p>
+                                            <label for="id_password">
+                                                Password
+                                            </label>
+                                            <input type="password" name="password" maxlength="255" required="" id="id_password">
+                                            </p>
+                                            <button class="ui black button" type="submit">Login</button>
+                                        </div>
+                                    </div>
+                                    {%if request.GET.next%}
+                                    <input type="hidden" name="next" value="{{request.GET.next}}">
+                                    {%endif%}
+                                </form>
+                                <p class="py-3 fw-bolder fs-5">Don't have an account? <a href="{%url 'register' %}" class="fw-normal fs-6">Register</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script>
+            var form_fields = document.getElementsByTagName('input')
+            for (var field in form_fields){
+			    form_fields[field].autocomplete += 'off'
+		    }
+        </script>
+    </body>
+</html>

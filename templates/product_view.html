@@ -1,0 +1,310 @@
+{%extends 'home/base.html' %}
+{%load static%}
+{%load c_filters%}
+{%block title%}Alat|Community{%endblock%}
+{%block links%}
+<meta charset="UTF-8">
+<title>Products</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{%static 'css/home/styles.css' %}">
+<link rel="stylesheet" href="{%static 'css/semantic.css' %}">
+<link rel="stylesheet" href="{%static 'css/icon1.css' %}">
+<link rel="stylesheet" href="{%static 'css/card.css' %}">
+<script>
+        var user = '{{request.user}}'
+
+        function getCookie(name){
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== ''){
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++){
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')){
+                        cookieValue = decodeURIComponent(cookie.substring(
+                            name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+</script>
+{%endblock%}
+{%block sub_shop%};
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 155px;
+    object-fit: fill;
+}
+
+/* .view-modal{
+    background-color: azure;
+} */
+.view-modal{
+    background: #0000008f;
+    top: 0;
+    z-index:2;
+    right:0;
+    left: 0;
+}
+
+</style>
+{%for message in messages%}
+<div class="ui white message shadow container">
+    <i class="black close icon mt-3"></i>
+    <div class="header text-center">
+        <p class="mt-3">{{message}} <i class="icon green check"></i></p>
+    </div>
+</div>
+{%endfor%}
+<div class="contain;er px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <div class="col-md-6">
+            <a onclick="openModal(this)">
+            <img class="card-img-top mb-5 mb-md-0" src="{{item.image.url}}" style="height: 370px; object-fit: contain;" nofollow>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <div class="small mb-1">{{item.code}}</div>
+            <h1 class="display-5 fw-bolder">{{item.pr_name}}</h1>
+            <div class="fs-5 mb-5">
+                <span class="text-decoration-line-through"></span>
+                <span>${{item.price}}</span>
+            </div>
+            <p class="lead">{{item.description}}</p>
+            <div class="d-flex">
+                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
+                       style="max-width: 3rem" readonly>
+                <button class="btn btn-outline-dark flex-shrink-0 update-cart"
+                        type="button" data-seller={{item.seller}}
+                        data-product={{item.id}} data-price={{item.price}} data-action="add" data-size="">
+                    <i class="icon cart me-1"></i>
+                    Add to cart
+                </button>
+                <button class="mx-3 btn btn-outline-dark flex-shrink-0" type="button">
+                    <i class="icon shopping bag me-1"></i>
+                    Buy
+                </button>
+                {%if size%}
+                    <select name="size" id="id_size" class="px-3">
+                        <option value="0" class="px-3 py-3">0MM</option>
+                        {%for size in size%}
+                        <option value="{{size}}" class="px-3 py-3">{{size}}MM</option>
+                        {%endfor%}
+                    </select>
+                {%else%}
+                    <select name="size" id="id_size" class="px-3 d-none">
+                        <option value="0" class="px-3 py-3">0MM</option>
+                    </select>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</div>
+<section class="py-5 mb-5">
+    <div class="container px-4 px-lg-5 mb-5">
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-lg-6">
+                <div class="d-flex align-items-center justify-content-between mt-5">
+                    <h1 class="fw-bolder fs-3">Shipping Info <i class="icon box"></i></h1>
+                    <a class="display-6 mb-3" onclick="openClick(this, 'show-info')" id=""><i
+                            class="icon angle down text-dark"></i></a>
+                </div>
+                <div class="d-none" id="show-info">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt voluptates rerum eveniet
+                        sapiente repellat esse, doloremque quod recusandae deleniti nostrum assumenda vel beatae sed aut
+                        modi nesciunt porro quisquam voluptatem.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="ui threaded comments">
+            <h3 class="ui dividing header">Reviews...</h3>
+            {%for i in comments%}
+            <div class="comment">
+                <a class="avatar">
+                    <img src="{%static 'images/profile.png' %}" class="img rounded-circle border">
+                </a>
+                <div class="content">
+                    <a class="author">{{i.name}}</a>
+                    <div class="metadata">
+                        <span class="date">{{i.date_added|date:'j M Y'}}</span>
+                    </div>
+                    <div class="text">
+                        {{i.body}}
+                    </div>
+                    <div class="actions">
+                        <!-- <a class="reply">Reply</a> -->
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            <form class="ui reply form" method="POST" action="">
+                {%csrf_token%}
+                <div class="field">
+                    {{form.body}}
+                </div>
+                <button class="ui black labeled submit icon button" type="submit">
+                    <i class="icon comment"></i> Add Review
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+<section class="py-1 bg-light py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="rounded border mb-5 w-50 text-center">
+            <h2 class="fw-bolder py-2 display-6">Other products from {{item.seller}}</h2>
+        </div>
+        <div class="owl-carousel owl-theme">
+            {%for rel in related%}
+            <a href="{%url 'prod_detail' rel.pk rel.pr_name %}" class="text-dark">
+                <div class="item">
+                    <div class="card mb-3 shadow border-0">
+                        <img src="{{rel.image.url}}" class="card-img-top o-f" alt="..." style="height: 54vh;">
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-between shadow mb-5">
+                        <h5 class="card-title lead">
+                            {{rel.pr_name}}
+                        </h5>
+                        <span class="card-title lead fw-bolder">N{{rel.price}}</span>
+                    </div>
+                </div>
+            </a>
+            {%endfor%}
+        </div>
+    </div>
+</section>
+<div class="h-100 view-modal position-fixed px-3 py-4 d-none" id="item-img-modal">
+    <div class="py-4 img-modal">
+        <div class="rounded">
+            <div class="close-modal text-end">
+                <i class="icon cancel text-white fw-bolder fs-5" onclick="closeModal(this)"></i>
+            </div>
+            <div class="card text-center">
+                <img src="{{item.image.url}}" alt="" class="img img-fluid" style="height: 41em; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock sub_shop%}
+{%block scripts%}
+<script src="{%static 'js/jquery.js' %}"></script>
+<script src="{%static 'js/home.js' %}"></script>
+<script src="{%static 'js/semantic.js' %}"></script>
+<script src="{%static 'js/owl.carousel.min.js' %}"></script>
+
+<script>
+$('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:3
+        }
+    }
+})
+</script>
+<script>
+$('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  })
+;
+// 
+//
+
+function openModal(e) {
+    const aniMate = document.querySelectorAll('.view-modal');
+    var modalClose = document.getElementById('item-img-modal')
+    if(modalClose.classList.contains('d-none')){
+        modalClose.classList.remove('d-none')
+        modalClose.style.animation = 'aniMate 2s forwards ease-in'
+    }
+}
+
+
+function closeModal(e) {
+    var modalClose = document.getElementById('item-img-modal')
+    modalClose.classList.add('d-none')
+}
+</script>
+<script>
+    function openClick(element, ID){
+        var enlargeBtn = document.getElementById(ID)
+        if (enlargeBtn.classList.contains('d-none')){
+            enlargeBtn.classList.remove('d-none');
+            element.innerHTML = `<i class="icon angle up text-dark" style=""></i>`
+        }else{
+            enlargeBtn.classList.add('d-none');
+            element.innerHTML = `<i class="icon angle down text-dark" style=""></i>`
+        }
+    }
+;
+
+
+
+</script>
+<script>
+console.log('hello world 3')
+// alert('{{item.seller}}')
+
+var updateBtns = document.getElementsByClassName('update-cart')
+var quantity = document.getElementById('inputQuantity')
+
+for (var i = 0; i < updateBtns.length; i++){
+    updateBtns[i].addEventListener('click', function(){
+        var seller = this.dataset.seller
+        var productId = this.dataset.product
+        var priceNum = this.dataset.price
+        var action = this.dataset.action
+        var size = this.dataset.size = document.getElementById('id_size').value
+        quantity.value = i++
+        console.log('productId:', productId, 'Action:', action, 'Size:', size)
+
+        console.log('User:', user)
+        if(user == "AnonymousUser"){
+            console.log('user not logged in')
+        }else{
+            updateUserOrder(seller, productId, action, priceNum, size)
+        }
+    })
+}
+
+function updateUserOrder(seller, productId, action, priceNum, size){
+    console.log('User is logged in, Processing...')
+
+        var url = '/shop/add_cart/'
+
+        fetch(url, {
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRFToken':csrftoken,
+            },
+            body:JSON.stringify({'seller':seller, 'productId':productId, 'action':action, 'priceNum':priceNum, 'size':size})
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Data:', data)
+        });
+}
+
+</script>
+{%endblock%}

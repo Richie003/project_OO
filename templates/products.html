@@ -1,0 +1,121 @@
+{%extends 'home/base.html' %}
+{%load static%}
+{%load c_filters%}
+{%block title%}Alat|Community{%endblock%}
+{%block links%}
+<meta charset="UTF-8">
+<title>Products</title>
+<link rel="stylesheet" href="{%static 'css/home/styles.css' %}">
+<link rel="stylesheet" href="{%static 'css/semantic.css' %}">
+<link rel="stylesheet" href="{%static 'css/icon1.css' %}">
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 255px;
+    object-fit: fill;
+}
+
+</style>
+{%endblock%}
+{%block shop%}
+<header class="bg-dark py-5 px-4" id="big-pic">
+    <div class="container px-4 px-lg-5 my-5 max-10">
+        <div class="text-center text-white mb-4">
+            <h1 class="display-3 fw-bolder">All Products</h1>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="row">
+        <div class="col-md-3 order-md-2 mb-4 mt-5 px-3">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Actions<i class="icon check text-warning"></i></span>
+                <span class="display-5 fs-4 fw-bolder text-secondary"></span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed bg-light py-3">
+                    <div>
+                        <a class="my-0 stretched-link fw-bolder text-dark" href="{%url 'prod_upload' %}">add</a>
+                    </div>
+                    <span class="text-dark"><i class="icon plus"></i></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed py-3">
+                    <div>
+                        <a class="stretched-link fw-bolder text-dark" href="">Customer orders</a>
+                    </div>
+                    <span class="text-dark"><i class="icon clipboard list"></i></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed bg-light py-3">
+                    <div class="text-success">
+                        <a class="stretched-link fw-bolder text-dark" href="{%url 'cart' %}">Cart</a>
+                    </div>
+                    <span class="text-dark"><i class="icon cart"></i></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed py-3">
+                    <a href="{%url 'prod_stats' %}" class="stretched-link fw-bolder text-dark">Statistics</a>
+                    <strong><i class="icon chart line"></i></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed py-3">
+                    <a href="" class="stretched-link fw-bolder text-dark">Filter</a>
+                    <strong><i class="icon filter"></i></strong>
+                </li>
+            </ul>
+
+            <form class="card p-2" action="" method="POST" id="search-form">
+                <div class="input-group">
+                    {%csrf_token%}
+                    <input type="hidden" name="search-request">
+                    <input type="text" class="form-control" id="search-input" placeholder="Search" autocomplete="off"/>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary"><i class="icon search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-9 order-md-1" id="original">
+            <div class="px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+                    {%if items%}
+                    {%for item in items%}
+                        <div class="col mb-5">
+                            <a class="mt-auto" href="{%url 'prod_detail' item.pk item.pr_name %}">
+                            <div class="card h-100 border-0">
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                                    Sale
+                                </div>
+                                <!-- Product image-->
+                                <img class="card-img-top" src="{{item.image.url}}" alt="...">
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="lead fw-bolder h4 text-dark">{{item.pr_name}}</h5>
+                                        <!-- Product price-->
+                                        <span class="text-dark mt-3 font-weight-bold">N{{item.price}}</span>
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                            </div>
+                        </a>
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 order-md-1 d-none" id="suggestion-box">
+            <div class="px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center" id="suggestion-cont">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock shop%}
+{%block scripts%}
+<script src="{%static 'js/jquery.js' %}"></script>
+<script src="{%static 'js/home.js' %}"></script>
+<script src="{%static 'js/semantic.js' %}"></script>
+<script src="{%static 'js/search_items.js' %}"></script>
+{%endblock%}

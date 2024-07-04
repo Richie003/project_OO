@@ -1,0 +1,64 @@
+{%extends 'home/base.html' %}
+{%load static%}
+{%load c_filters%}
+{%block title%}Alat|Community{%endblock%}
+{%block links%}
+<meta charset="UTF-8">
+<title>Products</title>
+<link rel="stylesheet" href="{%static 'css/home/styles.css' %}">
+<link rel="stylesheet" href="{%static 'css/semantic.css' %}">
+<link rel="stylesheet" href="{%static 'css/icon1.css' %}">
+<link rel="stylesheet" href="{%static 'css/sb-admin-2.min.css' %}">
+{%endblock%}
+{%block sub_shop%}
+<div class="container py-5">
+    <form class="ui form" method="POST" action="" enctype="multipart/form-data">
+        {%csrf_token%}
+    <h4 class="ui dividing header fw-bolder fs-4">Upload Product Info <i class="icon upload fs-4 mb-3"></i></h4>
+        <div class="field">
+            <div class="field px-3">
+                {{form.as_p|capfirst}}
+                <button class="ui black button" type="submit">Upload</button>
+            </div>
+        </div>
+</form>
+</div>
+{%endblock sub_shop%}
+{%block scripts%}
+<script src="{%static 'js/semantic.js' %}"></script>
+<script>
+    function getCookie(name){
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== ''){
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++){
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')){
+                    cookieValue = decodeURIComponent(cookie.substring(
+                        name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function removeData(DataURL, redirectURL) {
+        const csrftoken = getCookie('csrftoken');
+        let xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == XMLHttpRequest.DONE){
+                if (xmlhttp.status == 200){
+                    window.location.replace(redirectURL);
+                }else{
+                    alert('there was an error');
+                }
+            }
+        }
+        xmlhttp.open("DELETE", DataURL, true);
+        xmlhttp.setRequestHeader("X-CSRFToken", csrftoken)
+        xmlhttp.send();
+    }
+</script>
+{%endblock%}
